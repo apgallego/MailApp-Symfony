@@ -15,9 +15,17 @@ class Message
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    // /**
+    //  * @Column(type="integer", nullable=false)
+    //  * @ORM\ManyToOne(targetEntity="App\Entity\User", mappedBy="id")
+    //  */
     #[ORM\Column(type: 'integer')]
     private $senderID;
 
+    // /**
+    //  * @Column(type="integer", nullable=false)
+    //  * @ORM\ManyToOne(targetEntity="App\Entity\User", mappedBy="id")
+    //  */
     #[ORM\Column(type: 'integer')]
     private $receiverID;
 

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OutboxController!{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>MailApp</h1>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Outbox :: {{app.user.username}}</h1>
+        <div class="outbox">
+            {% for message in messages %}
+                <a href="">
+                    <div class="message">
+                        <div class="receiver">To: {{ message.receiverID }}</div>
+                        <div class="messageHeader">Subject: {{ message.header }}</div>
+                        <div class="messageBody">Content: {{ message.body }}</div>
+                        <div class="timestamp">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                        {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                        <br/>
+                    </div>
+                </a>
+            {% endfor %}
+        <div>
+    </main>
+{% endblock %}

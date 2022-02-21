@@ -15,20 +15,18 @@
 </header>
 
 <main>
-    <div class="search-contacts">
-        
-    </div>
-    <div class="inbox">
+    <button onclick="window.location.href='/message'" class="send-message">Send message</button>
+    {# <div class="inbox">
         {% for message in messages %}
             <a href="">
                 <div class="message">
                     {{ message.senderID }}
                     {{ message.header }}
                     {{ message.body }}
-                    {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                    {{ message.timestamp|date("Y-m-d H:i:s") }}
                 </div>
             </a>
         {% endfor %}
-    </div>
+    </div> #}
 </main>
 {% endblock %}

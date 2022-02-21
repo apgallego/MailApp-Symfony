@@ -49,9 +49,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 500, nullable: true)]
     private $pfp;
 
+    // /**
+    //  * @Column(type="integer", nullable=false)
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="id")
+    //  */
     #[ORM\Column(type: 'integer', nullable: true)]
     private $messageSent;
 
+    // /**
+    //  * @Column(type="integer", nullable=false)
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="id")
+    //  */
     #[ORM\Column(type: 'integer', nullable: true)]
     private $messageReceived;
 

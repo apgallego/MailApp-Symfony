@@ -7,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class OutboxController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
+    #[Route('/outbox', name: 'outbox')]
     public function index(MessageRepository $messageRepository): Response
     {
 
@@ -17,12 +17,11 @@ class HomeController extends AbstractController
          * @var \App\Entity\User $user
          */
         $user = $this->getUser();
-        // $userID = $user->getId();
         $messages = $messageRepository->findBy(['receiverID' => "1"]);
-        // var_dump($messages);
-
-        return $this->render('home/home.html.twig', [
-            'controller_name' => 'HomeController',
+        // $messages = $messageRepository->findBy(['message_sent' => $user->getMessageSent()]);
+        
+        return $this->render('outbox/outbox.html.twig', [
+            'controller_name' => 'OutboxController',
             'messages' => $messages
         ]);
     }
