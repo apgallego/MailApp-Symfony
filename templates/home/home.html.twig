@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MailApp{% endblock %}
+
+{% block body %}
+<header>
+    <h1>MailApp</h1>
+    <nav>
+        <ul>
+            <li><a href="/outbox">Outbox</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="search-contacts">
+        
+    </div>
+    <div class="inbox">
+        {% for message in messages %}
+            <a href="">
+                <div class="message">
+                    {{ message.senderID }}
+                    {{ message.header }}
+                    {{ message.body }}
+                    {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
