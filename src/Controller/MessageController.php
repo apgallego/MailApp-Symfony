@@ -55,7 +55,7 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            // return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home');
         }
         return $this->render('message/message.html.twig', [
             'controller_name' => 'MessageController',
