@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
+    <link href="{{asset('build/navbar.css')}}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block title %}MailApp{% endblock %}
 
 {% block body %}
@@ -10,23 +15,27 @@
             <li><a href="/outbox">Outbox</a></li>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Logout</a></li>
+            <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" /></li>
         </ul>
     </nav>
 </header>
 
 <main>
     <button onclick="window.location.href='/message'" class="send-message">Send message</button>
-    {# <div class="inbox">
+    <h1>Inbox :: {{app.user.username}}</h1>
+    <div class="inbox" style="border:1px solid black; width:600px; height:400px; overflow: scroll;">
         {% for message in messages %}
             <a href="">
                 <div class="message">
-                    {{ message.senderID }}
-                    {{ message.header }}
-                    {{ message.body }}
-                    {{ message.timestamp|date("Y-m-d H:i:s") }}
+                    <div class="sender msg-item">From: {{ message.senderID }}</div>
+                    <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
+                    <div class="messageBody msg-item">Content: {{ message.body }}</div>
+                    <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                    {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                    <br/>
                 </div>
             </a>
         {% endfor %}
-    </div> #}
+    </div>
 </main>
 {% endblock %}

@@ -38,7 +38,7 @@ class MessageController extends AbstractController
 
             $receiverEmail = $userRepository->findBy(['email' => $_POST['receiver']]);
             // receiverEmail->getId();
-            var_dump($receiverEmail);
+            // var_dump($receiverEmail);
 
             //DATA FROM FORM
             $message->setReceiverID($_POST['receiver']);

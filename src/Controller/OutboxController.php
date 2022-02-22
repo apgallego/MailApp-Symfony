@@ -17,7 +17,7 @@ class OutboxController extends AbstractController
          * @var \App\Entity\User $user
          */
         $user = $this->getUser();
-        $messages = $messageRepository->findBy(['receiverID' => "1"]);
+        $messages = $messageRepository->findBy(['senderID' => $user->getId()]);
         // $messages = $messageRepository->findBy(['message_sent' => $user->getMessageSent()]);
         
         return $this->render('outbox/outbox.html.twig', [

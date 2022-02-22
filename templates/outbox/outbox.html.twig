@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
+    <link href="{{asset('build/navbar.css')}}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block title %}Hello OutboxController!{% endblock %}
 
 {% block body %}
@@ -10,20 +15,21 @@
                 <li><a href="/home">Home</a></li>
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
+                <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" /></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <h1>Outbox :: {{app.user.username}}</h1>
-        <div class="outbox">
+        <div class="outbox" style="border:1px solid black; width:600px; height:400px; overflow: scroll;">
             {% for message in messages %}
                 <a href="">
                     <div class="message">
-                        <div class="receiver">To: {{ message.receiverID }}</div>
-                        <div class="messageHeader">Subject: {{ message.header }}</div>
-                        <div class="messageBody">Content: {{ message.body }}</div>
-                        <div class="timestamp">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                        <div class="receiver msg-item">To: {{ message.receiverID }}</div>
+                        <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
+                        <div class="messageBody msg-item">Content: {{ message.body }}</div>
+                        <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
                         {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
                         <br/>
                     </div>

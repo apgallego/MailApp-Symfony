@@ -18,7 +18,7 @@ class HomeController extends AbstractController
          */
         $user = $this->getUser();
         // $userID = $user->getId();
-        $messages = $messageRepository->findBy(['receiverID' => "1"]);
+        $messages = $messageRepository->findBy(['receiverID' => $user->getId()]);
         // var_dump($messages);
 
         return $this->render('home/home.html.twig', [
