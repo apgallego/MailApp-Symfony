@@ -26,7 +26,11 @@
             {% for message in messages %}
                 <a href="">
                     <div class="message">
-                        <div class="receiver msg-item">To: {{ message.receiverID }}</div>
+                    {% for user in users %}
+                        {% if user.id == message.receiverID %}
+                            <div class="receiver msg-item">To: {{ user.email }}</div>
+                        {% endif %}
+                    {% endfor %}
                         <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
                         <div class="messageBody msg-item">Content: {{ message.body }}</div>
                         <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>

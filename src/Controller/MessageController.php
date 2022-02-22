@@ -29,6 +29,7 @@ class MessageController extends AbstractController
         // var_dump($date);
 
         $message = new Message();
+        $users = $userRepository->findAll();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
@@ -36,7 +37,7 @@ class MessageController extends AbstractController
                 return $this->redirectToRoute('messages_error?errorMessage=Cant send this message');
             }
 
-            $receiverEmail = $userRepository->findBy(['email' => $_POST['receiver']]);
+            // $receiverEmail = $userRepository->findBy(['email' => $_POST['receiver']]);
             // receiverEmail->getId();
             // var_dump($receiverEmail);
 
@@ -59,7 +60,8 @@ class MessageController extends AbstractController
         }
         return $this->render('message/message.html.twig', [
             'controller_name' => 'MessageController',
-            'userID' => $userID
+            'userID' => $userID,
+            'users' => $users
         ]);
     }
 }
