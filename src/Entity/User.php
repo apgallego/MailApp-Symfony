@@ -49,20 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 500, nullable: true)]
     private $pfp;
 
-    // /**
-    //  * @Column(type="integer", nullable=false)
-    //  * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="id")
-    //  */
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $messageSent;
-
-    // /**
-    //  * @Column(type="integer", nullable=false)
-    //  * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="id")
-    //  */
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $messageReceived;
-
     #[ORM\Column(type: 'string', length: 30)]
     private $username;
 
@@ -205,30 +191,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPfp(?string $pfp): self
     {
         $this->pfp = $pfp;
-
-        return $this;
-    }
-
-    public function getMessageSent(): ?int
-    {
-        return $this->messageSent;
-    }
-
-    public function setMessageSent(?int $messageSent): self
-    {
-        $this->messageSent = $messageSent;
-
-        return $this;
-    }
-
-    public function getMessageReceived(): ?int
-    {
-        return $this->messageReceived;
-    }
-
-    public function setMessageReceived(?int $messageReceived): self
-    {
-        $this->messageReceived = $messageReceived;
 
         return $this;
     }

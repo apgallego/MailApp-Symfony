@@ -50,6 +50,7 @@ class MessageController extends AbstractController
             //Data that is default
             $message->setSenderID($user->getId());
             $message->setTimestamp($date);
+            $message->setIsRead(0);
             // $message->setIsRead(false);
 
             //Save new message in database

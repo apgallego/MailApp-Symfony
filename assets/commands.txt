@@ -1,0 +1,5 @@
+php bin/console doctrine:schema:update --force
+
+npm install --global yarn
+yarn add --dev @symfony/webpack-encore
+yarn encore dev

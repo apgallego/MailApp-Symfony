@@ -10,14 +10,14 @@
         <input type="text" name="sender" id="sender" value="{{app.user.email}}"/>
         <br/>
         <label for="receiver">To: </label>
-        {# <input type="text" name="receiver" id="receiver"/> #}
-        <select name="receiver[]" multiple placeholder="Search...">
+        <input type="text" name="receiver" id="receiver"/>
+        {# <select name="receiver[]" multiple placeholder="Search...">
             {% for user in users %}
                 {% if user.id != userID %}
                     <option value="{{user.id}}">{{user.email}}</option>
                 {% endif %}
             {% endfor %}
-        </select>
+        </select> #}
         <br/>
         {# <label for="timestamp">At: </label> #}
         {# <input typ="text" id="timestamp" name="messageTimestamp" hidden /> #}
