@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+{{parent()}}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
     <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" />
     <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" />
@@ -13,7 +14,7 @@
     <h1>MailApp</h1>
     <nav>
         <ul>
-            <li><a href="/outbox">Outbox</a></li>
+            <li><a href="/outbox" class="btn btn-outline-dark mt-3  btn-sm">Outbox</a></li>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Logout</a></li>
             <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" /></li>
