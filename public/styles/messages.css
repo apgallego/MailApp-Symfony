@@ -1,0 +1,29 @@
+main > h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.inbox, .outbox{
+    margin: auto;
+    border: 1px solid black;
+    width: 600px;
+    height: 400px;
+    overflow: scroll;
+}
+
+#msg{text-decoration: none;}
+.message{
+    margin: 10px;
+    border: 1px solid black;
+    width: 95%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.message > .pfp{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+}

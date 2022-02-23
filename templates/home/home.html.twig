@@ -2,7 +2,8 @@
 
 {% block stylesheets %}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
-    <link href="{{asset('build/navbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}MailApp{% endblock %}
@@ -23,11 +24,14 @@
 <main>
     <button onclick="window.location.href='/message'" class="send-message">Send message</button>
     <h1>Inbox :: {{app.user.username}}</h1>
-    <div class="inbox" style="border:1px solid black; width:600px; height:400px; overflow: scroll;">
+    <div class="inbox">
         {% for message in messages %}
-            <a href="">
+            <a id="msg" href="">
                 <div class="message">
                     {% for user in users %}
+                        {% if message.senderID == user.id %}
+                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" />
+                        {% endif %}
                         {% if user.id == message.senderID %}
                             <div class="sender msg-item">From: {{ user.email }}</div>
                         {% endif %}

@@ -2,7 +2,8 @@
 
 {% block stylesheets %}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
-    <link href="{{asset('build/navbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}Hello OutboxController!{% endblock %}
@@ -22,19 +23,25 @@
 
     <main>
         <h1>Outbox :: {{app.user.username}}</h1>
-        <div class="outbox" style="border:1px solid black; width:600px; height:400px; overflow: scroll;">
+        <div class="outbox">
             {% for message in messages %}
-                <a href="">
+                <a id="msg" href="">
                     <div class="message">
+                    
                     {% for user in users %}
+                        {% if message.receiverID == user.id %}
+                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" />
+                        {% endif %}
                         {% if user.id == message.receiverID %}
-                            <div class="receiver msg-item">To: {{ user.email }}</div>
+                            <div class="receiver msg-item"><b>To:</b> {{ user.email }}</div>
                         {% endif %}
                     {% endfor %}
-                        <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
-                        <div class="messageBody msg-item">Content: {{ message.body }}</div>
-                        <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
-                        {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                        <div class="content">
+                            <div class="messageHeader msg-item"><b>Subject:</b> {{ message.header }}</div>
+                            <div class="messageBody msg-item"><b>Content:</b> {{ message.body }}</div>
+                            <div class="timestamp msg-item"><b>Sent at:</b> {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                            {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
+                        </div>
                         <br/>
                     </div>
                 </a>
