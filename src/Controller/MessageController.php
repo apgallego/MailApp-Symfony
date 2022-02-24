@@ -74,11 +74,19 @@ class MessageController extends AbstractController
             // --------------------------------------------------
             $users = $userRepository->findAll();
             $fullMessage = $messageRepository->findBy(['id' => $_GET['messageID']]);
+            
+            // foreach($users as $user){
+            //     if($user->getId() == $fullMessage[0]->getSenderID()){
+            //         $userPfp = $user->getPfp();
+            //         $userEmail = $user->getEmail();
+            //     }
+            // }
 
             return $this->render('message/viewMessage.html.twig', [
                 'controller_name' => 'MessageController',
                 'users' => $users,
-                'message' => $fullMessage
+                // 'userPfp' => $userPfp,
+                'message' => $fullMessage[0]
             ]);
         }
     }

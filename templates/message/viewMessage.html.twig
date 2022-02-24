@@ -41,9 +41,9 @@
         <div class="container">
             <div class="view-message">
                 {% for user in users %}
-                    {% if message.id == user.id %}
-                        <img src="{{user.pfp}}" alt="pfp">
-                        <div class="senderEmail">
+                    {% if message.senderID == user.id %}
+                        <img src="{{ asset('uploads/'~user.pfp) }}" alt="pfp">
+                        <div class="senderEmail">{{ user.email }}</div>
                     {% endif %}
                 {% endfor %}
                 <div class="senderID"></div>
