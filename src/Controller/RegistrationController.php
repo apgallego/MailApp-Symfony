@@ -54,8 +54,8 @@ class RegistrationController extends AbstractController
 
                 // updates the 'pfpname' property to store the image file name
                 $user->setPfp($newFilename);
-            // }else{
-            //     $user->setPfp($this->getParameter('default'));
+            }else{
+                $user->setPfp($this->getParameter('default'));
             }
 
             // encode the plain password

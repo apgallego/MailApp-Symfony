@@ -3,27 +3,56 @@
 {% block stylesheets %}
 {{parent()}}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
-    <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" />
-    <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" />
+    {# <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" /> #}
+    {# <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" /> #}
 {% endblock %}
 
 {% block title %}MailApp{% endblock %}
 
 {% block body %}
 <header>
-    <h1>MailApp</h1>
-    <nav>
-        <ul>
+    {# <nav class="navbar navbar-dark bg-dark">
+        <h1 style="color:white;">MailApp</h1>
+        <ul class="container-fluid">
             <li><a href="/outbox" class="btn btn-outline-dark mt-3  btn-sm">Outbox</a></li>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Logout</a></li>
-            <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" /></li>
+            <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" /></li>
         </ul>
+    </nav> #}
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><h2>MailApp</h2></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-5 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/outbox">Outbox</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/message">Send Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex">
+                <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+            </div>
+        </div>
     </nav>
 </header>
 
 <main>
-    <button onclick="window.location.href='/message'" class="send-message">Send message</button>
     <h1>Inbox :: {{app.user.username}}</h1>
     <div class="inbox">
         {% for message in messages %}
@@ -46,5 +75,6 @@
             </a>
         {% endfor %}
     </div>
+    <button onclick="window.location.href='/message'" class="send-message btn btn-outline-dark">Send message</button>
 </main>
 {% endblock %}

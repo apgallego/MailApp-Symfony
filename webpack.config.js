@@ -56,7 +56,8 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    //****needs to be uncommented if you want to add bootstrap to app.css (which needs to be renamed to app.scss)
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

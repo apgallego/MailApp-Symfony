@@ -44,6 +44,7 @@ class ProfileController extends AbstractController
             $user->setUsername($_POST['custom-username']);
             $user->setTelephone($_POST['custom-telephone']);
             if(isset($_POST['custom-pfp']) && $_POST['custom-pfp'] !== '') $user->setPfp($_POST['custom-pfp']);
+            else $user->setPfp('pfp_default.jpg');
 
             //Save changes in database
             $entityManager->persist($user);

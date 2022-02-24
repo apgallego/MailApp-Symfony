@@ -1,46 +1,68 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+{{ parent() }}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
-    <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" />
+    {# <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" /> #}
 {% endblock %}
 
 {% block title %}Customize Profile | MailApp{% endblock %}
 
 {% block body %}
-<header>
-    <h1>MailApp</h1>
-    <nav>
-        <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/outbox">Outbox</a></li>
-            <li><a href="/logout">Logout</a></li>
-            <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" /></li>
-        </ul>
-    </nav>
-</header>
-
-<main>
-    <h1>Customize Profile :: {{app.user.username}}</h1>
-    <form class="profile" method="POST">
-        <div class="img-container">
-            <img class="img" src="{{ asset('uploads/'~userPfp) }}" alt="user-pfp" style="width: 600px; border-radius: 100%; margin: auto;" />
-        </div>
-        <div class="profile-content">
-            <label for="custom-username">Username: </label>
-            <input type="text" id="custom-username" name="custom-username" value="{{app.user.username}}" />
-            <br/>
-            <label for="custom-telephone">Telephone: </label>
-            <input type="text" id="custom-telephone" name="custom-telephone" value="{{app.user.telephone}}" />
-            <br/>
-            <label for="custom-pfp">Profile picture: </label>
-            <input type="file" id="custom-pfp" name="custom-pfp" value="{{userPfp}}" />
-
-            <div class="buttons">
-                <button type="submit">Save</button>
-                <button type="reset">Restore</button>
+        <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-info">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home"><h2>MailApp</h2></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-5 justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/outbox">Outbox</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/message">Send Message</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+                </div>
             </div>
-        </div>
-    </form>
-</main>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Customize Profile :: {{app.user.username}}</h1>
+        <form class="profile" method="POST">
+            <div class="img-container">
+                <img class="img" src="{{ asset('uploads/'~userPfp) }}" alt="user-pfp" style="width: 600px; border-radius: 100%; margin: auto;" />
+            </div>
+            <div class="profile-content">
+                <label for="custom-username">Username: </label>
+                <input type="text" id="custom-username" name="custom-username" value="{{app.user.username}}" />
+                <br/>
+                <label for="custom-telephone">Telephone: </label>
+                <input type="text" id="custom-telephone" name="custom-telephone" value="{{app.user.telephone}}" />
+                <br/>
+                <label for="custom-pfp">Profile picture: </label>
+                <input type="file" id="custom-pfp" name="custom-pfp" value="{{userPfp}}" />
+
+                <div class="buttons">
+                    <button type="submit">Save</button>
+                    <button type="reset">Restore</button>
+                </div>
+            </div>
+        </form>
+    </main>
 {% endblock %}

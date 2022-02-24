@@ -7,7 +7,7 @@ use App\Entity\Message;
 // use App\Entity\User;
 // use App\Controller\DateTime;
 use App\Repository\UserRepository;
-use DateTime;
+// use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,16 +33,15 @@ class MessageController extends AbstractController
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
+            //no possibility of sending messages to your own
             if ($user->getId() == $_POST['receiver']) {
                 return $this->redirectToRoute('messages_error?errorMessage=Cant send this message');
             }
 
-            // $receiverEmail = $userRepository->findBy(['email' => $_POST['receiver']]);
-            // receiverEmail->getId();
-            // var_dump($receiverEmail);
-
             //DATA FROM FORM
-            $message->setReceiverID($_POST['receiver']);
+            if(isset($_POST['receiver']) && $_POST['receiver'] !== '')
+                $receiver = $userRepository->findBy(['email' => $_POST['receiver']]);
+            $message->setReceiverID($receiver[0]->getId());
             $message->setHeader($_POST['messageHead']);
             $message->setBody($_POST['messageBody']);
             // $message->setAttachFile($_POST['fileToUpload']);
