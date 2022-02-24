@@ -71,6 +71,7 @@ class MessageController extends AbstractController
     {
         if(isset($_GET['messageID'])){
             //TODO: fix this and logic here for seen messages
+            // --------------------------------------------------
             $users = $userRepository->findAll();
             $fullMessage = $messageRepository->findBy(['id' => $_GET['messageID']]);
 

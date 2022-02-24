@@ -56,7 +56,7 @@
     <h1>Inbox :: {{app.user.username}}</h1>
     <div class="inbox">
         {% for message in messages %}
-            <a id="msg" href="">
+            <a id="msg" href="/view-message?messageID={{ message.id }}">
                 <div class="message">
                     {% for user in users %}
                         {% if message.senderID == user.id %}
@@ -69,7 +69,6 @@
                     <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
                     <div class="messageBody msg-item">Content: {{ message.body }}</div>
                     <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
-                    {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
                     <br/>
                 </div>
             </a>
