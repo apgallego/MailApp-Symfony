@@ -63,12 +63,12 @@
                             <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" />
                         {% endif %}
                         {% if user.id == message.senderID %}
-                            <div class="sender msg-item">From: {{ user.email }}</div>
+                            <div class="sender msg-item"><b>From: </b>{{ user.email }}</div>
                         {% endif %}
                     {% endfor %}
-                    <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
-                    <div class="messageBody msg-item">Content: {{ message.body }}</div>
-                    <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                    <div class="messageHeader msg-item"><b>Subject: </b>{{ message.header }}</div>
+                    <div class="messageBody msg-item"><b>Content: </b>{{ message.body }}</div>
+                    <div class="timestamp msg-item"><b>Sent at: </b>{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
                     <br/>
                 </div>
             </a>
