@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Message;
+use App\Repository\MessageRepository;
 // use App\Entity\User;
 // use App\Controller\DateTime;
 use App\Repository\UserRepository;
@@ -63,5 +64,21 @@ class MessageController extends AbstractController
             'userID' => $userID,
             'users' => $users
         ]);
+    }
+
+    #[Route('/view-message', name: 'view_message')]
+    public function viewMessage(UserRepository $userRepository, MessageRepository $messageRepository): Response
+    {
+        if(isset($_GET['messageID'])){
+            //TODO: fix this and logic here for seen messages
+            $users = $userRepository->findAll();
+            $fullMessage = $messageRepository->findBy(['id' => $_GET['messageID']]);
+
+            return $this->render('message/viewMessage.html.twig', [
+                'controller_name' => 'MessageController',
+                'users' => $users,
+                'message' => $fullMessage
+            ]);
+        }
     }
 }
