@@ -7,6 +7,19 @@
     {# <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" /> #}
 {% endblock %}
 
+{# {% block javascript %}
+    <script>
+        window.addEventListener( "pageshow", function ( event ) {
+            var historyTraversal = event.persisted || ( typeof window.performance != "undefined" and window.performance.navigation.type === 2 )
+            console.log('reloading works')
+            if ( historyTraversal ) {
+                // Handle page restore.
+                window.location.reload()
+            }
+        })
+    </script>
+{% endblock %} #}
+
 {% block title %}MailApp{% endblock %}
 
 {% block body %}
@@ -69,6 +82,9 @@
                     <div class="messageHeader msg-item"><b>Subject: </b>{{ message.header }}</div>
                     <div class="messageBody msg-item"><b>Content: </b>{{ message.body }}</div>
                     <div class="timestamp msg-item"><b>Sent at: </b>{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                    {% if message.isRead == 1 %}
+                        <div class="seen">(seen)</div>
+                    {% endif %}
                     <br/>
                 </div>
             </a>
@@ -76,4 +92,14 @@
     </div>
     <button onclick="window.location.href='/message'" class="send-message btn btn-outline-dark">Send message</button>
 </main>
+<script>
+    window.addEventListener( "pageshow", function ( event ) {
+        var historyTraversal = event.persisted || ( typeof window.performance != "undefined" and window.performance.navigation.type === 2 )
+        console.log('reloading works')
+        if ( historyTraversal ) {
+            // Handle page restore.
+            window.location.reload()
+        }
+    })
+</script>
 {% endblock %}
