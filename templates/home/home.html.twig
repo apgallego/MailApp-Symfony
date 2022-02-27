@@ -73,7 +73,7 @@
                 <div class="message">
                     {% for user in users %}
                         {% if message.senderID == user.id %}
-                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" />
+                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" width="60" />
                         {% endif %}
                         {% if user.id == message.senderID %}
                             <div class="sender msg-item"><b>From: </b>{{ user.email }}</div>

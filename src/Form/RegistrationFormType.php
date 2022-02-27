@@ -49,7 +49,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
+                ])
             ->add('telephone')
             ->add('pfp', FileType::class, [
                 'label' => "Profile Picture:  ",

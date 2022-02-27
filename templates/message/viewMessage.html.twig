@@ -42,7 +42,7 @@
             <div class="view-message">
                 {% for user in users %}
                     {% if message.senderID == user.id %}
-                        <img src="{{ asset('uploads/'~user.pfp) }}" alt="pfp">
+                        <img src="{{ asset('uploads/'~user.pfp) }}" alt="pfp"  width="60" />
                         <div class="senderEmail">{{ user.email }}</div>
                     {% endif %}
                 {% endfor %}
@@ -54,4 +54,5 @@
             </div>
         </div>
     </main>
+    <button class="">Answer to this mail</button>
 {% endblock %}

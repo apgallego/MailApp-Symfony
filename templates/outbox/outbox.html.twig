@@ -52,7 +52,7 @@
                     
                     {% for user in users %}
                         {% if message.receiverID == user.id %}
-                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" />
+                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" width="60" />
                         {% endif %}
                         {% if user.id == message.receiverID %}
                             <div class="receiver msg-item"><b>To:</b> {{ user.email }}</div>
@@ -62,7 +62,6 @@
                             <div class="messageHeader msg-item"><b>Subject:</b> {{ message.header }}</div>
                             <div class="messageBody msg-item"><b>Content:</b> {{ message.body }}</div>
                             <div class="timestamp msg-item"><b>Sent at:</b> {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
-                            {# {{ message.timestamp|date("Y-m-d H:i:s") }} #}
                         </div>
                         <br/>
                     </div>

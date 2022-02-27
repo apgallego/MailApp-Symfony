@@ -80,23 +80,19 @@ class MessageController extends AbstractController
         $date = new \DateTime('@' . strtotime('now'));
         // var_dump($date);
 
-        $message = new Message();
         $users = $userRepository->findAll();
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['receivers'])) {
             
-            //no possibility of sending messages to your own
-            if ($user->getId() == $_POST['receiver']) {
-                return $this->redirectToRoute('messages_error?errorMessage=Cant send this message');
-            }
-
-            //DATA FROM FORM
-            // if(isset($_POST['receiver']) && $_POST['receiver'] !== '')
-            //     $receiver = $userRepository->findBy(['email' => $_POST['receiver']]);
-            for($i = 0; $i <= count($_POST['receiver']); $i++){
+            foreach($_POST['receivers'] as $receiverID){
                 //check this
-                $receiver = $userRepository->findBy(['email' => $_POST['receiver'][$i]]);
-                $message->setReceiverID($receiver[0]->getId());
+                $message = new Message();
+                // $receiver = $userRepository->createQueryBuilder('u')
+                // ->andWhere('u.email = :email')
+                // ->setParameter('email', $recEmail)
+                // ->getQuery()
+                // ->getResult();
+                $message->setReceiverID($receiverID);
                 $message->setHeader($_POST['messageHead']);
                 $message->setBody($_POST['messageBody']);
                 // $message->setAttachFile($_POST['fileToUpload']);
@@ -112,14 +108,48 @@ class MessageController extends AbstractController
                 $entityManager->flush();
             }
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('various_message');
         }
-        return $this->render('message/message.html.twig', [
+        return $this->render('message/variousMessage.html.twig', [
             'controller_name' => 'MessageController',
             // 'userID' => $userID,
             'users' => $users
         ]);
     }
+/*
+    $date = new \DateTime('@' . strtotime('now'));
+
+        @var \App\Entity\User $user
+        $user = $this->getUser();
+        $allUsers = $userRepository->findAll();
+
+        $entityManager = $doctrine->getManager();
+
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['messageMultiple'])) {
+            foreach ($_POST['messageMultiple'] as $participant) {
+                $message = new Message();
+                // * Get id of the user from the email
+                $reciver = $userRepository
+                    ->findBy(
+                        ['email' => $participant]
+                    );
+                $message->setReciver($reciver[0]->getId());
+                $message->setMessage($_POST['message']);
+                $message->setSender($user->getId());
+                $message->setDate($date);
+                $message->setIsRead(false);
+                $entityManager->persist($message);
+                $entityManager->flush();
+            }
+            return $this->redirectToRoute('outbox');
+        }
+        
+        return $this->render('send_message_multiple/index.html.twig', [
+            'controller_name' => 'SendMessageMultipleController',
+            'users' => $allUsers
+        ]);
+    }
+    */
 
     #[Route('/view-message', name: 'view_message')]
     public function viewMessage(ManagerRegistry $doctrine, UserRepository $userRepository, MessageRepository $messageRepository): Response

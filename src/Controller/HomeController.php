@@ -13,13 +13,19 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(MessageRepository $messageRepository, UserRepository $userRepository): Response
     {
-
         /** 
          * @var \App\Entity\User $user
          */
         $user = $this->getUser();
         // $userID = $user->getId();
-        $messages = $messageRepository->findBy(['receiverID' => $user->getId()]);
+        // $messages = $messageRepository->findBy(['receiverID' => $user->getId()]);
+        $messages = $messageRepository->createQueryBuilder('m')
+            ->andWhere('m.receiverID = :id')
+            ->setParameter('id', $user->getId())
+            ->orderBy('m.timestamp', 'DESC')
+            ->getQuery()
+            ->getResult();
+
         $users = $userRepository->findAll();
         // var_dump($messages);
 
