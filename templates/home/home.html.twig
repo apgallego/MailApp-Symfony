@@ -7,32 +7,10 @@
     {# <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" /> #}
 {% endblock %}
 
-{# {% block javascript %}
-    <script>
-        window.addEventListener( "pageshow", function ( event ) {
-            var historyTraversal = event.persisted || ( typeof window.performance != "undefined" and window.performance.navigation.type === 2 )
-            console.log('reloading works')
-            if ( historyTraversal ) {
-                // Handle page restore.
-                window.location.reload()
-            }
-        })
-    </script>
-{% endblock %} #}
-
 {% block title %}MailApp{% endblock %}
 
 {% block body %}
 <header>
-    {# <nav class="navbar navbar-dark bg-dark">
-        <h1 style="color:white;">MailApp</h1>
-        <ul class="container-fluid">
-            <li><a href="/outbox" class="btn btn-outline-dark mt-3  btn-sm">Outbox</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
-            <li><img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" /></li>
-        </ul>
-    </nav> #}
     <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container-fluid">
             <a class="navbar-brand" href="/home"><h2>MailApp</h2></a>
@@ -53,6 +31,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/profile">Profile</a>
                     </li>
+                    {% if app.user.roles == ["ROLE_ADMIN", 0] %}
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="/admin">Admin Zone</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
@@ -93,14 +76,4 @@
         {% endfor %}
     </div>
 </main>
-{# <script>
-    window.addEventListener( "pageshow", function ( event ) {
-        var historyTraversal = event.persisted || ( typeof window.performance != "undefined" and window.performance.navigation.type === 2 )
-        console.log('reloading works')
-        if ( historyTraversal ) {
-            // Handle page restore.
-            window.location.reload()
-        }
-    })
-</script> #}
 {% endblock %}

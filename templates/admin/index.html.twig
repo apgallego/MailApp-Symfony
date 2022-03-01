@@ -1,20 +1,94 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}User index{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block body %}<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-info">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><h2>MailApp</h2></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-5 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/outbox">Outbox</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/message">Send Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    {% if app.user.roles == ["ROLE_ADMIN", 0] %}
+                        <li class="nav-item">
+                            <a class="nav-link active text-danger" aria-current="page" href="/admin"><u>Admin Zone</u></a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex">
+                <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
+            </div>
+        </div>
+    </nav>
+</header>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Alfredo PG/Documents/GitHub/MailApp-Symfony/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Alfredo PG/Documents/GitHub/MailApp-Symfony/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
-</div>
+<main>
+    <h1 class="my-3">Admin Zone</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Telephone</th>
+                <th>Pfp</th>
+                <th>Username</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.pfp }}</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin_show', {'id': user.id}) }}">Show</a>
+                    <a class="btn btn-danger" href="{{ path('admin_delete', {'id': user.id}) }}">Delete</a>
+                    {# <a href="{{ path('admin_edit', {'id': user.id}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+    {# <a href="{{ path('admin_new') }}">Create new</a> #}
 {% endblock %}
