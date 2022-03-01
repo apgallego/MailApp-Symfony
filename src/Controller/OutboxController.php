@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
+use App\Repository\GroupRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OutboxController extends AbstractController
 {
     #[Route('/outbox', name: 'outbox')]
-    public function index(MessageRepository $messageRepository, UserRepository $userRepository): Response
+    public function index(MessageRepository $messageRepository, UserRepository $userRepository, GroupRepository $groupRepository): Response
     {
 
         /** 
@@ -28,12 +29,15 @@ class OutboxController extends AbstractController
             ->getResult();
         $users = $userRepository->findAll();
 
+        $groups = $groupRepository->findAll();
+
         // $messages = $messageRepository->findBy(['message_sent' => $user->getMessageSent()]);
         
         return $this->render('outbox/outbox.html.twig', [
             'controller_name' => 'OutboxController',
             'messages' => $messages,
-            'users' => $users
+            'users' => $users,
+            'group' => $groups
         ]);
     }
 }

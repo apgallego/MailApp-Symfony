@@ -5,12 +5,14 @@ namespace App\Controller;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Message;
 use App\Repository\MessageRepository;
+use App\Repository\GroupRepository;
 // use App\Entity\User;
 // use App\Controller\DateTime;
 use App\Repository\UserRepository;
 // use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
@@ -64,6 +66,7 @@ class MessageController extends AbstractController
             'users' => $users
         ]);
     }
+
     #[Route('/message/reply', name: 'message_reply')]
     public function reply(ManagerRegistry $doctrine, UserRepository $userRepository, MessageRepository $messageRepository): Response
     {
@@ -159,6 +162,61 @@ class MessageController extends AbstractController
             'controller_name' => 'MessageController',
             // 'userID' => $userID,
             'users' => $users
+        ]);
+    }
+
+    #[Route('/group-messages', name: 'group_messages')]
+    public function groupMessages(ManagerRegistry $doctrine, UserRepository $userRepository, GroupRepository $groupRepository, Request $request): Response
+    {
+        $entityManager = $doctrine->getManager();
+
+        /** 
+         * @var \App\Entity\User $user
+         */
+        $user = $this->getUser();
+        $userID = $user->getId();
+        $senderUsername = $user->getUsername();
+        $date = new \DateTime('@' . strtotime('now'));
+
+        $message = new Message();
+
+        $groupID = $request->query->get('id');
+        $users = $userRepository->findAll();
+
+        if(isset($groupID)){
+            $group = $groupRepository->findBy(['id' => $groupID])[0];
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                foreach($group->getUserIDs() as $member){
+                    if($member !== $userID){
+                        //DATA FROM FORM
+                        $message->setHeader($_POST["messageHead"]);
+                        $message->setBody($_POST['messageBody']);
+                        // $message->setAttachFile($_POST['fileToUpload']);
+
+                        //Data that is default
+                        $message->setSenderID($userID);
+                        $message->setReceiverID($member);
+                        $message->setTimestamp($date);
+                        $message->setIsRead(0);
+                        // $message->setIsRead(false);
+
+                        //Save new message in database
+                        $entityManager->persist($message);
+                        $entityManager->flush();
+                    }
+                }
+                return $this->redirectToRoute('home');
+            }
+        }
+        return $this->render('message/groupMessage.html.twig', [
+            'controller_name' => 'MessageController',
+            'userID' => $userID,
+            'sender' => $senderUsername,
+            'users' => $users,
+            // 'receivers' => $stringEmails,
+            'group' => $group,
+            'groupUserIDs' => $group->getUserIDs()
         ]);
     }
 
