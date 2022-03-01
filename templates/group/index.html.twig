@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GroupController!{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+<header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-info">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home"><h2>MailApp</h2></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-5 justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/outbox">Outbox</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/message">Send Message</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/groups">Groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        {% if app.user.roles == ["ROLE_ADMIN", "ROLE_USER"] %}
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="/admin">Admin Zone</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp"  width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
+                </div>
+            </div>
+        </nav>
+    </header>
+<main>
+
+    <div class="create-group">
+        <h1 class="mx-auto text-center">New Group</h1>
+                <form class="needs-validation d-flex flex-column justify-content-between align-items-center mt-2 w-100" action="" method="POST">
+                    <div class="form-group">
+                        <label for="alias">Alias: </label>
+                        <input type="text" name="alias" id="alias"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="participants">Participants: </label>
+                        <select name="participants[]" id="participants" style="width: 150px;" multiple>
+                            {% for user in users %}
+                                {% if user.id != app.user.id %}
+                                    <option value="{{user.id}}">{{user.email}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Create group</button>
+                        <button type="reset" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+    </div>
+
+    <div class="groups-container">
+        <h1 class="mt-5 text-center">Groups :: {{app.user.username}}</h1>
+        <div class="groups mx-auto overflow-auto" style="width: 800px; height: 35em; border: 1px solid #999;">
+            {% for group in groups %}
+                {% for userID in group.userIDs %}
+                    {% if userID == app.user.id %}
+                        <div id="msg" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+                        <img src="{{ 'uploads/pfp_group_default.jpg' }}" alt="group-pfp" class="" style="width: 60px; height: 60px;" />
+                            <div id="alias" class="alias message d-flex gap-2 my-3 w-50 justify-content-between"><b>{{ group.alias }}</b></div>
+                                <div class="participants mx-2">
+                                    {# <div class="group-creator">{{ creatorUsername }}</div> #}
+                                    {% for user in users %}
+                                        {% for userID in group.userIDs %}
+                                            {% if userID == user.id %}
+                                                <div class="participant">{{ user.username }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            <div class="timestamp msg-item opacity-50 text-nowrap" style="width: 50px;">{{ group.timestamp | date("Y-m-d H:i:s") }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        <div>
+    </div>
+</main>
+{% endblock %}
