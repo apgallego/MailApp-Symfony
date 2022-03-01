@@ -14,13 +14,13 @@
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-5 justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="/home">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/home">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/outbox">Outbox</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/message">Send Message</a>
+                            <a class="nav-link" href="/message">Send Message</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/profile">Profile</a>
@@ -31,28 +31,42 @@
                     </ul>
                 </div>
                 <div class="d-flex">
-                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
                 </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <div class="container">
-            <div class="view-message">
+        {# <div class="outbox mx-auto overflow-auto" style="width: 800px; height: 35em; border: 1px solid #999;">
                 {% for user in users %}
                     {% if message.senderID == user.id %}
-                        <img src="{{ asset('uploads/'~user.pfp) }}" alt="pfp"  width="60" />
-                        <div class="senderEmail">{{ user.email }}</div>
+                        <img src="{{ asset('uploads/'~user.pfp) }}" alt="pfp"  width="60px" height="60px" />
+                        <div class="senderNameSurnameUsername"><b>{{ user.name }} ({{ user.username }}) {{ user.surname }}</b></div>
+                        <div class="senderEmail"> --> {{ user.email }}</div>
                     {% endif %}
                 {% endfor %}
-                <div class="senderID"></div>
-                <div class="messageHeader msg-item">Subject: {{ message.header }}</div>
-                <div class="messageBody msg-item">Content: {{ message.body }}</div>
-                <div class="timestamp msg-item">Sent at: {{ message.timestamp | date("Y-m-d H:i:s") }}</div>
-                <br/>
+                <div class="messageHeader msg-item"><b>Subject: </b>{{ message.header }}</div>
+                <div class="messageBody msg-item"><b>Content: </b>{{ message.body }}</div>
+                <div class="timestamp msg-item"><b>Sent at: </b>{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+            <br/>
+        </div> #}
+        <div class="card mx-auto mt-5" style="width: 600px;">
+            {% for user in users %}
+                {% if message.senderID == user.id %}
+                    <img src="{{ asset('uploads/'~user.pfp) }}" class="card-img-top mt-2" alt="pfp" style="width: 60px; height: 60px; margin: auto;">
+                    <div class="card-body mx-auto text-center">
+                        <div class="senderNameSurnameUsername card-text"><b>{{ user.name }} "{{ user.username }}" {{ user.surname }}</b></div>
+                        <div class="senderEmail card-text">{{ user.email }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="card-body">
+                <h5 class="card-title"><b><u>Subject:</u></b><br/>{{ message.header }}</h5>
+                <p class="messageBody msg-item card-text"><b><u>Content:</u></b><br/>{{ message.body }}</p>
+                <div class="timestamp msg-item card-text"><b><u>Sent at:</u><br/></b>{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
             </div>
+        <a href="/message/reply?msgID={{ message.id }}&receiverID={{ message.senderID }}" class="btn btn-warning mx-auto mt-2 mb-2">Answer to this mail</a>
         </div>
     </main>
-    <button class="">Answer to this mail</button>
 {% endblock %}

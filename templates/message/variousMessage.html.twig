@@ -38,39 +38,45 @@
                     </ul>
                 </div>
                 <div class="d-flex">
-                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp"  width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
-    <h1 class="mx-auto">Send Message (Various)</h1>
-        <form class="mx-auto" action="" method="POST" novalidate enctype="multipart/form-data">
-            <label for="sender">From: </label>
-            <input type="text" name="sender" id="sender" value="{{app.user.email}}"/>
-            <br/>
-            <label for="receivers">To: </label>
-            {# <input type="text" name="receiver" id="receiver"/> #}
-            <select name="receivers[]" id="receivers" multiple>
-                {% for user in users %}
-                    {% if user.id != app.user.id %}
-                        <option value="{{user.id}}">{{user.email}}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            <br/>
-            {# <label for="timestamp">At: </label> #}
-            {# <input typ="text" id="timestamp" name="messageTimestamp" hidden /> #}
+    <main class="d-flex flex-column justify-content-center align-items-center mt-2">
+    <h1 class="mx-auto text-center">Send Message (Various)</h1>
+        <form class="needs-validation d-flex flex-column justify-content-between align-items-center mt-2 w-100" action="" method="POST">
+            <div class="form-group">
+                <label for="sender">From: </label>
+                <input type="text" name="sender" id="sender" value="{{app.user.email}}"/>
+            </div>
             {# <br/> #}
-            <label for="head">Head: </label>
-            <input type="text" name="messageHead" id="head" />
-            <br/>
-            <label for="body">Body: </label><br/>
-            <textarea name="messageBody" id="body" rows="4" cols="50"></textarea>
-            <br/>
-            <button type="submit">Send Email</button>
-            <button type="reset">Delete</button>
+            <div class="form-group">
+            <label for="receivers">To: </label>
+                <select name="receivers[]" id="receivers" class="" multiple>
+                    {% for user in users %}
+                        {% if user.id != app.user.id %}
+                            <option value="{{user.id}}">{{user.email}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            {# <br/> #}
+            <div class="form-group">
+                <label for="head">Head: </label>
+                <input type="text" name="messageHead" id="head" />
+            </div>
+            {# <br/> #}
+            <div class="form-group">
+                <label for="body">Body: </label><br/>
+                <textarea name="messageBody" id="body" rows="4" cols="50"></textarea>
+            </div>
+            {# <br/> #}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Send Email</button>
+                <button type="reset" class="btn btn-danger">Delete</button>
+            </div>
         </form>
     </main>
 {% endblock %}

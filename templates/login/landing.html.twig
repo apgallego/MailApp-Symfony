@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{parent()}}
+    {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
+    {# <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" /> #}
+    {# <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" /> #}
+{% endblock %}
+
+{% block title %}MailApp{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="mx-auto mt-5 text-center " style="width: 300px;">
+            <h1 class="mx-auto">MailApp</h1>
+            <h6 class="mx-auto">Tell your friends!</h6>
+            <hr/>
+            <a class="mx-auto btn btn-info" href="/login">Login</a>
+            <a class="mx-auto btn btn-info" href="/register">Register</a>
+        </div>
+    </main>
+{% endblock %}

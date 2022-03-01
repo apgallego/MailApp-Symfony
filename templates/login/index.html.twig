@@ -1,27 +1,36 @@
 {# templates/login/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{# ... #}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+    <main>  
+        <h1 class="mx-auto text-center mt-5">MailApp</h1>
+        <form action="{{ path('login') }}" class="mx-auto w-25 mt-3 d-grid gap-3" method="post">
+            <div class="form-group">
+                <label for="username">Email:</label>
+                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="_password"/>
+            </div>
 
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button type="submit">login</button>
-        <br/>
-        <label><a href="{{path('app_register')}}">or register if you don't have an account!</a></label>
-    </form>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <br/>
+            <a href="{{path('app_register')}}" class="btn btn-warning">Or register if you don't have an account!</a>
+        </form>
+    </main>
 
     {# ***** Without CSRF ***** #}
     {# <form action="{{ path('login') }}" method="post"> #}
@@ -35,5 +44,5 @@
         {# <input type="hidden" name="_target_path" value="/account"/> #}
 
         {# <button type="submit">login</button> #}
-    </form>
+    {# </form> #}
 {% endblock %}

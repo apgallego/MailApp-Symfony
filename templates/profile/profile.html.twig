@@ -36,18 +36,19 @@
                     </ul>
                 </div>
                 <div class="d-flex">
-                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+                    <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp"  width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
                 </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <h1>Customize Profile :: {{app.user.username}}</h1>
-        <form class="profile" method="POST">
-            <div class="img-container">
-                <img class="img" src="{{ asset('uploads/'~userPfp) }}" alt="user-pfp" style="width: 600px; border-radius: 100%; margin: auto;" />
-            </div>
+        <h1 class="mx-auto text-center">Customize Profile :: {{app.user.username}}</h1>
+            <div class="mx-auto text-center py-3">
+                <div class="img-container my-3">
+                    <img class="img" src="{{ asset('uploads/'~userPfp) }}" alt="user-pfp" style="width: 300px; height: 300px; border-radius: 100%; margin: auto;" />
+                </div>
+        {# <form class="profile" method="POST">
             <div class="profile-content">
                 <label for="custom-username">Username: </label>
                 <input type="text" id="custom-username" name="custom-username" value="{{app.user.username}}" />
@@ -56,12 +57,30 @@
                 <input type="text" id="custom-telephone" name="custom-telephone" placeholder="Your telephone here!" value="{{app.user.telephone}}" />
                 <br/>
                 <label for="custom-pfp">Profile picture: </label>
-                <input type="file" id="custom-pfp" name="custom-pfp" value="{{app.user.pfp}}" />
+                <input type="file" id="custom-pfp" name="custom-pfp" accept="image/jpeg, image/png, image/gif"/>
                 <div class="buttons">
                     <button type="submit">Save</button>
                     <button type="reset">Restore</button>
                 </div>
             </div>
-        </form>
+        </form> #}
+        
+            {{ form_start(profileForm) }}
+            {{ form_row(profileForm.username, {
+                label: 'Username: '
+            }) }}
+            {{ form_row(profileForm.telephone, {
+                label: 'Telephone: '
+            }) }}
+            {{ form_row(profileForm.pfp, {
+                label: 'Profile Picture: '
+            }) }}
+
+            <div class="my-3">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+            {{ form_end(profileForm) }}
+        </div>
     </main>
 {% endblock %}

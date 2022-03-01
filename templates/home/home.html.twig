@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-{{parent()}}
+{{ parent() }}
     {# <link href="../assets/styles/navbar.css" type="text/css" rel="stylesheet" /> #}
     {# <link href="{{asset('styles/navbar.css')}}" type="text/css" rel="stylesheet" /> #}
     {# <link href="{{asset('styles/messages.css')}}" type="text/css" rel="stylesheet" /> #}
@@ -59,40 +59,41 @@
                 </ul>
             </div>
             <div class="d-flex">
-                <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60" style="border-radius: 100%; margin-right: 20px;"/>
+                <img id="pfp" src="{{ asset('uploads/'~app.user.pfp) }}" alt="pfp" width="60px" height="60px" style="border-radius: 100%; margin-right: 20px;"/>
             </div>
         </div>
     </nav>
 </header>
 
 <main>
-    <h1>Inbox :: {{app.user.username}}</h1>
-    <div class="inbox">
+    <h1 class="mt-5 text-center">Inbox :: {{app.user.username}}</h1>
+    <div class="inbox mx-auto" style="width: 800px; height: 35em; border: 1px solid #999;">
         {% for message in messages %}
-            <a id="msg" href="/view-message?messageID={{ message.id }}">
-                <div class="message">
+            <a id="msg" class="list-group-item list-group-item-action d-flex gap-3 py-3" href="/view-message?messageID={{ message.id }}">
+                <div class="message d-flex gap-2 w-100 justify-content-between">
                     {% for user in users %}
                         {% if message.senderID == user.id %}
-                            <img class="pfp msg-item" src="{{ 'uploads/'~user.pfp }}" alt="pfp" width="60" />
+                            <img class="pfp msg-item rounded-circle flex-shrink-0" src="{{ 'uploads/'~user.pfp }}" alt="pfp" width="60px" height="60px"/>
                         {% endif %}
                         {% if user.id == message.senderID %}
-                            <div class="sender msg-item"><b>From: </b>{{ user.email }}</div>
+                            <div class="sender msg-item position-relative mt-3" style="width: 100px;"><b>{{ user.email }}</b></div>
                         {% endif %}
                     {% endfor %}
-                    <div class="messageHeader msg-item"><b>Subject: </b>{{ message.header }}</div>
-                    <div class="messageBody msg-item"><b>Content: </b>{{ message.body }}</div>
-                    <div class="timestamp msg-item"><b>Sent at: </b>{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                    <div>
+                        <div class="messageHeader msg-item mb-0 opacity-75" style="width: 100px;"><u><b>{{ message.header }}</b></u></div>
+                        <div class="messageBody msg-item mb-0 opacity-50 text-truncate" style="width: 200px;"><b>{{ message.body }}</b></div>
+                        <div class="timestamp msg-item opacity-50 text-nowrap" style="width: 50px;">{{ message.timestamp | date("Y-m-d H:i:s") }}</div>
+                    </div>
                     {% if message.isRead == 1 %}
-                        <div class="seen">(seen)</div>
+                        <div class="seen fas fa-check-square"></div>
                     {% endif %}
                     <br/>
                 </div>
             </a>
         {% endfor %}
     </div>
-    <button onclick="window.location.href='/message'" class="send-message btn btn-outline-dark">Send message</button>
 </main>
-<script>
+{# <script>
     window.addEventListener( "pageshow", function ( event ) {
         var historyTraversal = event.persisted || ( typeof window.performance != "undefined" and window.performance.navigation.type === 2 )
         console.log('reloading works')
@@ -101,5 +102,5 @@
             window.location.reload()
         }
     })
-</script>
+</script> #}
 {% endblock %}

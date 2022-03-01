@@ -32,6 +32,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/profile">Profile</a>
                         </li>
+                        {# {% if app.user.roles == [1] %}
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="/admin">Logout</a>
+                            </li>
+                        {% endif %} #}
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>
@@ -54,12 +59,12 @@
             {# <br/> #}
             <div class="form-group">
                 <label for="receiver">To: </label>
-                <input type="text" name="receiver" id="receiver"/>
+                <input type="text" name="receiver" id="receiver" value="{{ userEmail }}"/>
             </div>
             {# <br/> #}
             <div class="form-group">
                 <label for="head">Head: </label>
-                <input type="text" name="messageHead" id="head" />
+                <input type="text" name="messageHead" id="head" value="{{ replyHeader }}"/>
             </div>
             {# <br/> #}
             <div class="form-group">
@@ -72,6 +77,5 @@
                 <button type="reset" class="btn btn-danger">Delete</button>
             </div>
         </form>
-        <a href="/various-message" class="mt-2 btn btn-outline-warning">Or you can send a message to several contacts</a>
     </main>
 {% endblock %}
