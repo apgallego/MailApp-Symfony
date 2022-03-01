@@ -6,3 +6,6 @@ yarn encore dev
 
 yarn add sass-loader@^12.0.0 sass --dev
 * add Encore.enableSassLoader() into webpack.config.js file
+
+--crud for admin zone
+php bin/console make:crud
