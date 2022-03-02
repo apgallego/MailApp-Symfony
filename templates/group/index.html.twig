@@ -77,32 +77,27 @@
         <h1 class="mt-5 text-center">Groups :: {{app.user.username}}</h1>
         <div class="groups mx-auto overflow-auto" style="width: 800px; height: 35em; border: 1px solid #999;">
             {% for group in groups %}
-                {% for userID in group.userIDs %}
-                    {% if userID == app.user.id %}
-                        <div id="msg" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-                            <img src="{{ 'uploads/pfp_group_default.jpg' }}" alt="group-pfp" class="" style="width: 60px; height: 60px;" />
-                            <div id="alias" class="alias message d-flex gap-2 my-3 w-50 justify-content-between"><b>{{ group.alias }}</b></div>
-                                <div class="participants mx-2">
+                    {% for userID in group.userIDs %}
+                        {% if userID == app.user.id %}
+                            <a id="msg" href="{{ path('group_messages', {'id': group.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+                                <img src="{{ 'uploads/pfp_group_default.jpg' }}" alt="group-pfp" class="" style="width: 60px; height: 60px;" />
+                                    <div id="alias" class="alias message d-flex gap-2 my-3 w-50 justify-content-between"><b>{{ group.alias }}</b></div>
                                     {# <div class="group-creator">{{ creatorUsername }}</div> #}
-                                    {% for user in users %}
-                                        {% for userID in group.userIDs %}
-                                            {% if userID == user.id %}
-                                                <div class="participant">{{ user.username }}</div>
-                                            {% endif %}
+                                    <div class="participants mx-2">
+                                        {% for user in users %}
+                                            {% for userID in group.userIDs %}
+                                                {% if userID == user.id %}
+                                                    <div class="participant">{{ user.username }}</div>
+                                                {% endif %}
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
-                                </div>
-                            <div>
-                            <div class="timestamp msg-item opacity-50 text-nowrap" style="width: 50px;"><u>Created</u>: {{ group.timestamp | date("Y-m-d H:i:s") }}</div>
-                        </div>
-                        <div class="text-nowrap my-auto">
-                            <a href="{{ path('group_messages', {'id': group.id}) }}" class="btn btn-warning my-3">Send message</a>
-                            {# <a href="/leave-group" class="btn btn-danger my-3">Leave group</a> #}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                                    </div>
+                                <div class="timestamp msg-item opacity-50 text-nowrap" style="width: 50px;"><u>Created</u>: {{ group.timestamp | date("Y-m-d H:i:s") }}</div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
             {% endfor %}
-        <div>
+        </div>
     </div>
 </main>
 {% endblock %}
