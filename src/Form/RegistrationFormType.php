@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,8 +25,16 @@ class RegistrationFormType extends AbstractType
             ->add('name')
             ->add('surname')
             ->add('username')
-            ->add('age')
-            ->add('email')
+            ->add('age', NumberType::class, [
+                'attr' => array('min' => 14, 'max' => 99)
+                // 'constraints' => [
+                //     new Value([
+                //         'min' => 14,
+                //         'max' => 99
+                //     ])
+                // ]
+            ])
+            ->add('email', EmailType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
