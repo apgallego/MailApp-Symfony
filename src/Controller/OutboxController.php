@@ -1,5 +1,8 @@
 <?php
-
+// src/Controller/OutboxController.php
+/**
+ * This controller manages the outbox of the webapp
+ */
 namespace App\Controller;
 
 use App\Repository\MessageRepository;
@@ -14,7 +17,7 @@ class OutboxController extends AbstractController
     #[Route('/outbox', name: 'outbox')]
     public function index(MessageRepository $messageRepository, UserRepository $userRepository, GroupRepository $groupRepository): Response
     {
-
+        //we get the current user and all the existing messages which were sent to the current user
         /** 
          * @var \App\Entity\User $user
          */
@@ -27,8 +30,8 @@ class OutboxController extends AbstractController
             ->orderBy('m.timestamp', 'DESC')
             ->getQuery()
             ->getResult();
+        //now we get all the users and groups to iterate throught them in the twig template
         $users = $userRepository->findAll();
-
         $groups = $groupRepository->findAll();
 
         // $messages = $messageRepository->findBy(['message_sent' => $user->getMessageSent()]);
