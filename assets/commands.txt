@@ -9,3 +9,7 @@ yarn add sass-loader@^12.0.0 sass --dev
 
 --crud for admin zone
 php bin/console make:crud
+
+--for password reset
+composer require symfonycasts/reset-password-bundle
+php bin/console make:reset-password
